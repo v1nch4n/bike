@@ -10,91 +10,89 @@
             margin: 0;
             padding: 0;
             display: flex;
-            height: 100vh;
-            background-color: #eef7fb;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #0056b3;
-            color: white;
-            display: flex;
             flex-direction: column;
-            padding: 20px;
-            gap: 10px; /* Space between items */
+            align-items: center;
+            background-color: #f5f5f5;
         }
-        .sidebar h2 {
-            margin: 0 0 20px;
-            text-align: center;
-        }
-        .sidebar .nav-item {
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #007bff;
-            transition: background-color 0.3s, color 0.3s;
-            text-align: left; /* Align text to the left */
-            padding-left: 20px; /* Add padding for better alignment */
-        }
-        .sidebar .nav-item.filled {
-            background-color: #28a745;
-            color: white;
-        }
-        .sidebar .nav-item:hover {
-            background-color: #004080;
+        h1 {
+            margin-top: 20px;
+            color: #333333;
         }
         .main-content {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .container {
-            width: 90%;
+            width: 100%;
             max-width: 600px;
-            text-align: center;
+            margin-top: 20px;
             padding: 20px;
             background: #ffffff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            color: #333333;
-        }
-        h1 {
-            color: #0056b3;
+            position: relative;
         }
         .question {
             margin-bottom: 20px;
-            font-size: 1.2em;
-            color: #0056b3;
+            font-size: 1.5em; /* Same size as "Few steps to your dream bike" */
+            font-weight: bold; /* Same style */
+            color: #333333; /* Same color */
+            text-align: center; /* Center-align the question text */
         }
         .options {
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
             gap: 10px;
         }
         .button {
-            margin-top: 20px;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
             padding: 10px 20px;
-            background-color: #007BFF;
+            background-color: #666666;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1em;
         }
+        .button:hover {
+            background-color: #444444;
+        }
+        .sidebar {
+            width: 100%;
+            max-width: 600px;
+            background-color: #e0e0e0;
+            color: #333333;
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .sidebar h2 {
+            margin: 0 0 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+        }
+        .sidebar .nav-item {
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+        .sidebar .nav-item.filled {
+            background-color: #a0a0a0;
+            color: white;
+        }
+        .sidebar .nav-item:hover {
+            background-color: #d0d0d0;
+        }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Navigation</h2>
-        <div id="nav-screen1" class="nav-item" onclick="navigateToScreen(1)">1. Reason</div>
-        <div id="nav-screen2" class="nav-item" onclick="navigateToScreen(2)">2. Riding Style</div>
-        <div id="nav-screen3" class="nav-item" onclick="navigateToScreen(3)">3. Brands</div>
-        <div id="nav-screen4" class="nav-item" onclick="navigateToScreen(4)">4. Budget</div>
-        <div id="nav-screen5" class="nav-item" onclick="navigateToScreen(5)">5. Occasion</div>
-    </div>
+    <h1>Find Your Perfect Bike</h1>
     <div class="main-content">
         <div class="container" id="screen1">
-            <h1>Find Your Perfect Bike</h1>
             <div class="question">Why do you need a bike?</div>
             <div class="options">
                 <label><input type="checkbox" value="commuting" onchange="updateStatus(1)"> Commuting</label>
@@ -107,7 +105,6 @@
         </div>
 
         <div class="container" id="screen2" style="display: none;">
-            <h1>Find Your Perfect Bike</h1>
             <div class="question">What is your riding style?</div>
             <div class="options">
                 <label><input type="radio" name="riding-style" value="urban" onchange="updateStatus(2)"> Urban</label>
@@ -120,21 +117,17 @@
         </div>
 
         <div class="container" id="screen3" style="display: none;">
-            <h1>Find Your Perfect Bike</h1>
             <div class="question">Do you have some favorite brands?</div>
             <div class="options">
                 <label><input type="checkbox" value="brand1" onchange="updateStatus(3)"> Trek</label>
                 <label><input type="checkbox" value="brand2" onchange="updateStatus(3)"> Specialized</label>
                 <label><input type="checkbox" value="brand3" onchange="updateStatus(3)"> Giant</label>
-                <label><input type="checkbox" value="brand4" onchange="updateStatus(3)"> Cannondale</label>
-                <label><input type="checkbox" value="brand5" onchange="updateStatus(3)"> Scott</label>
                 <label><input type="text" placeholder="Other (type your favorite brand)" id="other-brand" onchange="updateStatus(3)"></label>
             </div>
             <button class="button" onclick="goToNextScreen(4)">Next</button>
         </div>
 
         <div class="container" id="screen4" style="display: none;">
-            <h1>Find Your Perfect Bike</h1>
             <div class="question">What is your budget?</div>
             <div class="options">
                 <label><input type="radio" name="budget" value="cheap" onchange="updateStatus(4)"> 200 to 500 CHF</label>
@@ -145,7 +138,6 @@
         </div>
 
         <div class="container" id="screen5" style="display: none;">
-            <h1>Find Your Perfect Bike</h1>
             <div class="question">Can the bike be occasion?</div>
             <div class="options">
                 <label><input type="radio" name="occasion" value="yes" onchange="updateStatus(5)"> Yes</label>
@@ -153,11 +145,15 @@
             </div>
             <button class="button" onclick="displaySummary()">Finish</button>
         </div>
+    </div>
 
-        <div class="container" id="summary" style="display: none;">
-            <h1>Your Bike Preferences</h1>
-            <div id="summary-content"></div>
-        </div>
+    <div class="sidebar">
+        <h2>Few steps to your dream bike</h2>
+        <div id="nav-screen1" class="nav-item" onclick="navigateToScreen(1)">1. Reason</div>
+        <div id="nav-screen2" class="nav-item" onclick="navigateToScreen(2)">2. Riding Style</div>
+        <div id="nav-screen3" class="nav-item" onclick="navigateToScreen(3)">3. Brands</div>
+        <div id="nav-screen4" class="nav-item" onclick="navigateToScreen(4)">4. Budget</div>
+        <div id="nav-screen5" class="nav-item" onclick="navigateToScreen(5)">5. Occasion</div>
     </div>
 
     <script>
