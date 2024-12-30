@@ -18,6 +18,33 @@
             margin-top: 20px;
             color: #333333;
         }
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+        }
+        .timeline-step {
+            width: 40px;
+            height: 40px;
+            background-color: #a0a0a0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+        .timeline-step.completed {
+            background-color: #4caf50; /* Green for completed steps */
+        }
         .main-content {
             width: 100%;
             max-width: 600px;
@@ -30,10 +57,10 @@
         }
         .question {
             margin-bottom: 20px;
-            font-size: 1.5em; /* Same size as "Few steps to your dream bike" */
-            font-weight: bold; /* Same style */
-            color: #333333; /* Same color */
-            text-align: center; /* Center-align the question text */
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333333;
+            text-align: center;
         }
         .options {
             display: flex;
@@ -56,41 +83,17 @@
         .button:hover {
             background-color: #444444;
         }
-        .sidebar {
-            width: 100%;
-            max-width: 600px;
-            background-color: #e0e0e0;
-            color: #333333;
-            padding: 20px;
-            margin-top: 10px;
-            border-radius: 10px;
-            text-align: left;
-        }
-        .sidebar h2 {
-            margin: 0 0 20px;
-            font-size: 1.5em;
-            font-weight: bold;
-            text-align: center;
-        }
-        .sidebar .nav-item {
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #f0f0f0;
-            margin-bottom: 10px;
-            transition: background-color 0.3s;
-        }
-        .sidebar .nav-item.filled {
-            background-color: #a0a0a0;
-            color: white;
-        }
-        .sidebar .nav-item:hover {
-            background-color: #d0d0d0;
-        }
     </style>
 </head>
 <body>
     <h1>Find Your Perfect Bike</h1>
+    <div class="timeline">
+        <div id="step1" class="timeline-step">1</div>
+        <div id="step2" class="timeline-step">2</div>
+        <div id="step3" class="timeline-step">3</div>
+        <div id="step4" class="timeline-step">4</div>
+        <div id="step5" class="timeline-step">5</div>
+    </div>
     <div class="main-content">
         <div class="container" id="screen1">
             <div class="question">Why do you need a bike?</div>
@@ -147,46 +150,20 @@
         </div>
     </div>
 
-    <div class="sidebar">
-        <h2>Few steps to your dream bike</h2>
-        <div id="nav-screen1" class="nav-item" onclick="navigateToScreen(1)">1. Reason</div>
-        <div id="nav-screen2" class="nav-item" onclick="navigateToScreen(2)">2. Riding Style</div>
-        <div id="nav-screen3" class="nav-item" onclick="navigateToScreen(3)">3. Brands</div>
-        <div id="nav-screen4" class="nav-item" onclick="navigateToScreen(4)">4. Budget</div>
-        <div id="nav-screen5" class="nav-item" onclick="navigateToScreen(5)">5. Occasion</div>
-    </div>
-
     <script>
-        const pageStatuses = [false, false, false, false, false];
-
         function goToNextScreen(screenNumber) {
-            navigateToScreen(screenNumber);
-        }
-
-        function navigateToScreen(screenNumber) {
             document.querySelectorAll('.container').forEach(container => {
                 container.style.display = 'none';
             });
             document.getElementById(`screen${screenNumber}`).style.display = 'block';
         }
 
-        function updateStatus(screenNumber) {
-            const inputs = document.querySelectorAll(`#screen${screenNumber} input`);
+        function updateStatus(step) {
+            const inputs = document.querySelectorAll(`#screen${step} input`);
             const filled = Array.from(inputs).some(input => input.checked || input.value.trim());
-            pageStatuses[screenNumber - 1] = filled;
-
-            const navItem = document.getElementById(`nav-screen${screenNumber}`);
             if (filled) {
-                navItem.classList.add('filled');
-            } else {
-                navItem.classList.remove('filled');
+                document.getElementById(`step${step}`).classList.add('completed');
             }
-        }
-
-        function displaySummary() {
-            const summaryContent = document.getElementById('summary-content');
-            summaryContent.innerHTML = "<p>Summary coming soon!</p>";
-            navigateToScreen('summary');
         }
     </script>
 </body>
