@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Perfect Bike</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #eef7fb;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: #333333;
+        }
+        h1 {
+            color: #0056b3;
+        }
+        .question {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #0056b3;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .options label:hover {
+            background-color: #cfe8ff;
+            transform: scale(1.02);
+        }
+        .options input {
+            margin-right: 10px;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="screen1">
+        <h1>Find Your Perfect Bike</h1>
+        <div class="question">Why do you need a bike?</div>
+        <div class="options">
+            <label><input type="checkbox" value="commuting"> Commuting</label>
+            <label><input type="checkbox" value="fitness"> Fitness</label>
+            <label><input type="checkbox" value="leisure"> Leisure</label>
+            <label><input type="checkbox" value="off-road"> Off-Road Adventures</label>
+            <label><input type="checkbox" value="racing"> Racing</label>
+        </div>
+        <button class="button" onclick="goToNextScreen(2)">Next</button>
+    </div>
+
+    <div class="container" id="screen2" style="display: none;">
+        <h1>Find Your Perfect Bike</h1>
+        <div class="question">What is your riding style?</div>
+        <div class="options">
+            <label><input type="radio" name="riding-style" value="urban"> Urban</label>
+            <label><input type="radio" name="riding-style" value="mountain"> Mountain</label>
+            <label><input type="radio" name="riding-style" value="road"> Road</label>
+            <label><input type="radio" name="riding-style" value="trail"> Trail</label>
+            <label><input type="radio" name="riding-style" value="electric"> Electric</label>
+        </div>
+        <button class="button" onclick="goToNextScreen(3)">Next</button>
+    </div>
+
+    <div class="container" id="screen3" style="display: none;">
+        <h1>Find Your Perfect Bike</h1>
+        <div class="question">Do you have some favorite brands?</div>
+        <div class="options">
+            <label><input type="checkbox" value="brand1"> Trek</label>
+            <label><input type="checkbox" value="brand2"> Specialized</label>
+            <label><input type="checkbox" value="brand3"> Giant</label>
+            <label><input type="checkbox" value="brand4"> Cannondale</label>
+            <label><input type="checkbox" value="brand5"> Scott</label>
+            <label><input type="checkbox" value="brand6"> Bianchi</label>
+            <label><input type="checkbox" value="brand7"> Canyon</label>
+            <label><input type="checkbox" value="brand8"> Santa Cruz</label>
+            <label><input type="checkbox" value="brand9"> Orbea</label>
+            <label><input type="checkbox" value="brand10"> Cube</label>
+            <label><input type="checkbox" value="dontcare"> I don't care</label>
+            <label><input type="text" placeholder="Other (type your favorite brand)" id="other-brand"></label>
+        </div>
+        <button class="button" onclick="goToNextScreen(4)">Next</button>
+    </div>
+
+    <div class="container" id="screen4" style="display: none;">
+        <h1>Find Your Perfect Bike</h1>
+        <div class="question">What is your budget?</div>
+        <div class="options">
+            <label><input type="radio" name="budget" value="cheap"> Go cheap, run expensive (200 to 500 CHF)</label>
+            <label><input type="radio" name="budget" value="decent"> Find me a decent bike (500 to 1,500 CHF)</label>
+            <label><input type="radio" name="budget" value="passion"> My bike is my passion (1,500 to unlimited CHF)</label>
+        </div>
+        <button class="button" onclick="goToNextScreen(5)">Next</button>
+    </div>
+
+    <div class="container" id="screen5" style="display: none;">
+        <h1>Find Your Perfect Bike</h1>
+        <div class="question">Can the bike be occasion?</div>
+        <div class="options">
+            <label><input type="radio" name="occasion" value="yes"> Yes</label>
+            <label><input type="radio" name="occasion" value="no"> No</label>
+        </div>
+        <button class="button" onclick="displaySummary()">Finish</button>
+    </div>
+
+    <div class="container" id="summary" style="display: none;">
+        <h1>Your Bike Preferences</h1>
+        <div id="summary-content"></div>
+        <button class="button" onclick="goToNextScreen(1)">Edit Answers</button>
+        <button class="button" onclick="goToNextScreen(1)">Start Over</button>
+    </div>
+
+    <script>
+        function goToNextScreen(screenNumber) {
+            document.querySelectorAll('.container').forEach(container => {
+                container.style.display = 'none';
+            });
+            document.getElementById(`screen${screenNumber}`).style.display = 'block';
+        }
+
+        function displaySummary() {
+    const summaryContent = document.getElementById('summary-content');
+    const answers = {
+        reason: Array.from(document.querySelectorAll('#screen1 input:checked')).map(input => input.value),
+        style: document.querySelector('#screen2 input:checked')?.value,
+        brands: Array.from(document.querySelectorAll('#screen3 input:checked')).map(input => input.value),
+        otherBrand: document.getElementById('other-brand').value.trim(),
+        budget: document.querySelector('#screen4 input:checked')?.value,
+        occasion: document.querySelector('#screen5 input:checked')?.value
+    };
+
+    let summaryHTML = `<p><strong>Reason for bike:</strong> ${answers.reason.length > 0 ? answers.reason.join(', ') : 'Not specified'}</p>`;
+    summaryHTML += `<p><strong>Riding style:</strong> ${answers.style || 'Not specified'}</p>`;
+    summaryHTML += `<p><strong>Favorite brands:</strong> ${answers.brands.length > 0 ? answers.brands.join(', ') : 'Not specified'}</p>`;
+    if (answers.otherBrand) {
+        summaryHTML += `<p><strong>Other brand:</strong> ${answers.otherBrand}</p>`;
+    }
+    summaryHTML += `<p><strong>Budget:</strong> ${answers.budget || 'Not specified'}</p>`;
+    summaryHTML += `<p><strong>Occasion:</strong> ${answers.occasion || 'Not specified'}</p>`;
+
+    summaryContent.innerHTML = summaryHTML;
+
+    // Navigate to the summary screen
+    document.querySelectorAll('.container').forEach(container => {
+        container.style.display = 'none';
+    });
+    document.getElementById('summary').style.display = 'block';
+}
+    </script>
+</body>
+</html>
