@@ -10,11 +10,43 @@
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
             height: 100vh;
             background-color: #eef7fb;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #0056b3;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 10px; /* Space between items */
+        }
+        .sidebar h2 {
+            margin: 0 0 20px;
+            text-align: center;
+        }
+        .sidebar .nav-item {
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            transition: background-color 0.3s, color 0.3s;
+            text-align: left; /* Align text to the left */
+            padding-left: 20px; /* Add padding for better alignment */
+        }
+        .sidebar .nav-item.filled {
+            background-color: #28a745;
+            color: white;
+        }
+        .sidebar .nav-item:hover {
+            background-color: #004080;
+        }
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .container {
             width: 90%;
@@ -39,24 +71,6 @@
             flex-direction: column;
             gap: 10px;
         }
-        .options label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            background-color: #f0f8ff;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .options label:hover {
-            background-color: #cfe8ff;
-            transform: scale(1.02);
-        }
-        .options input {
-            margin-right: 10px;
-        }
         .button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -66,125 +80,118 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1em;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
-    <div class="container" id="screen1">
-        <h1>Find Your Perfect Bike</h1>
-        <div class="question">Why do you need a bike?</div>
-        <div class="options">
-            <label><input type="checkbox" value="commuting"> Commuting</label>
-            <label><input type="checkbox" value="fitness"> Fitness</label>
-            <label><input type="checkbox" value="leisure"> Leisure</label>
-            <label><input type="checkbox" value="off-road"> Off-Road Adventures</label>
-            <label><input type="checkbox" value="racing"> Racing</label>
-        </div>
-        <button class="button" onclick="goToNextScreen(2)">Next</button>
+    <div class="sidebar">
+        <h2>Navigation</h2>
+        <div id="nav-screen1" class="nav-item" onclick="navigateToScreen(1)">1. Reason</div>
+        <div id="nav-screen2" class="nav-item" onclick="navigateToScreen(2)">2. Riding Style</div>
+        <div id="nav-screen3" class="nav-item" onclick="navigateToScreen(3)">3. Brands</div>
+        <div id="nav-screen4" class="nav-item" onclick="navigateToScreen(4)">4. Budget</div>
+        <div id="nav-screen5" class="nav-item" onclick="navigateToScreen(5)">5. Occasion</div>
     </div>
-
-    <div class="container" id="screen2" style="display: none;">
-        <h1>Find Your Perfect Bike</h1>
-        <div class="question">What is your riding style?</div>
-        <div class="options">
-            <label><input type="radio" name="riding-style" value="urban"> Urban</label>
-            <label><input type="radio" name="riding-style" value="mountain"> Mountain</label>
-            <label><input type="radio" name="riding-style" value="road"> Road</label>
-            <label><input type="radio" name="riding-style" value="trail"> Trail</label>
-            <label><input type="radio" name="riding-style" value="electric"> Electric</label>
+    <div class="main-content">
+        <div class="container" id="screen1">
+            <h1>Find Your Perfect Bike</h1>
+            <div class="question">Why do you need a bike?</div>
+            <div class="options">
+                <label><input type="checkbox" value="commuting" onchange="updateStatus(1)"> Commuting</label>
+                <label><input type="checkbox" value="fitness" onchange="updateStatus(1)"> Fitness</label>
+                <label><input type="checkbox" value="leisure" onchange="updateStatus(1)"> Leisure</label>
+                <label><input type="checkbox" value="off-road" onchange="updateStatus(1)"> Off-Road Adventures</label>
+                <label><input type="checkbox" value="racing" onchange="updateStatus(1)"> Racing</label>
+            </div>
+            <button class="button" onclick="goToNextScreen(2)">Next</button>
         </div>
-        <button class="button" onclick="goToNextScreen(3)">Next</button>
-    </div>
 
-    <div class="container" id="screen3" style="display: none;">
-        <h1>Find Your Perfect Bike</h1>
-        <div class="question">Do you have some favorite brands?</div>
-        <div class="options">
-            <label><input type="checkbox" value="brand1"> Trek</label>
-            <label><input type="checkbox" value="brand2"> Specialized</label>
-            <label><input type="checkbox" value="brand3"> Giant</label>
-            <label><input type="checkbox" value="brand4"> Cannondale</label>
-            <label><input type="checkbox" value="brand5"> Scott</label>
-            <label><input type="checkbox" value="brand6"> Bianchi</label>
-            <label><input type="checkbox" value="brand7"> Canyon</label>
-            <label><input type="checkbox" value="brand8"> Santa Cruz</label>
-            <label><input type="checkbox" value="brand9"> Orbea</label>
-            <label><input type="checkbox" value="brand10"> Cube</label>
-            <label><input type="checkbox" value="dontcare"> I don't care</label>
-            <label><input type="text" placeholder="Other (type your favorite brand)" id="other-brand"></label>
+        <div class="container" id="screen2" style="display: none;">
+            <h1>Find Your Perfect Bike</h1>
+            <div class="question">What is your riding style?</div>
+            <div class="options">
+                <label><input type="radio" name="riding-style" value="urban" onchange="updateStatus(2)"> Urban</label>
+                <label><input type="radio" name="riding-style" value="mountain" onchange="updateStatus(2)"> Mountain</label>
+                <label><input type="radio" name="riding-style" value="road" onchange="updateStatus(2)"> Road</label>
+                <label><input type="radio" name="riding-style" value="trail" onchange="updateStatus(2)"> Trail</label>
+                <label><input type="radio" name="riding-style" value="electric" onchange="updateStatus(2)"> Electric</label>
+            </div>
+            <button class="button" onclick="goToNextScreen(3)">Next</button>
         </div>
-        <button class="button" onclick="goToNextScreen(4)">Next</button>
-    </div>
 
-    <div class="container" id="screen4" style="display: none;">
-        <h1>Find Your Perfect Bike</h1>
-        <div class="question">What is your budget?</div>
-        <div class="options">
-            <label><input type="radio" name="budget" value="cheap"> Go cheap, run expensive (200 to 500 CHF)</label>
-            <label><input type="radio" name="budget" value="decent"> Find me a decent bike (500 to 1,500 CHF)</label>
-            <label><input type="radio" name="budget" value="passion"> My bike is my passion (1,500 to unlimited CHF)</label>
+        <div class="container" id="screen3" style="display: none;">
+            <h1>Find Your Perfect Bike</h1>
+            <div class="question">Do you have some favorite brands?</div>
+            <div class="options">
+                <label><input type="checkbox" value="brand1" onchange="updateStatus(3)"> Trek</label>
+                <label><input type="checkbox" value="brand2" onchange="updateStatus(3)"> Specialized</label>
+                <label><input type="checkbox" value="brand3" onchange="updateStatus(3)"> Giant</label>
+                <label><input type="checkbox" value="brand4" onchange="updateStatus(3)"> Cannondale</label>
+                <label><input type="checkbox" value="brand5" onchange="updateStatus(3)"> Scott</label>
+                <label><input type="text" placeholder="Other (type your favorite brand)" id="other-brand" onchange="updateStatus(3)"></label>
+            </div>
+            <button class="button" onclick="goToNextScreen(4)">Next</button>
         </div>
-        <button class="button" onclick="goToNextScreen(5)">Next</button>
-    </div>
 
-    <div class="container" id="screen5" style="display: none;">
-        <h1>Find Your Perfect Bike</h1>
-        <div class="question">Can the bike be occasion?</div>
-        <div class="options">
-            <label><input type="radio" name="occasion" value="yes"> Yes</label>
-            <label><input type="radio" name="occasion" value="no"> No</label>
+        <div class="container" id="screen4" style="display: none;">
+            <h1>Find Your Perfect Bike</h1>
+            <div class="question">What is your budget?</div>
+            <div class="options">
+                <label><input type="radio" name="budget" value="cheap" onchange="updateStatus(4)"> 200 to 500 CHF</label>
+                <label><input type="radio" name="budget" value="decent" onchange="updateStatus(4)"> 500 to 1,500 CHF</label>
+                <label><input type="radio" name="budget" value="passion" onchange="updateStatus(4)"> 1,500 to unlimited CHF</label>
+            </div>
+            <button class="button" onclick="goToNextScreen(5)">Next</button>
         </div>
-        <button class="button" onclick="displaySummary()">Finish</button>
-    </div>
 
-    <div class="container" id="summary" style="display: none;">
-        <h1>Your Bike Preferences</h1>
-        <div id="summary-content"></div>
-        <button class="button" onclick="goToNextScreen(1)">Edit Answers</button>
-        <button class="button" onclick="goToNextScreen(1)">Start Over</button>
+        <div class="container" id="screen5" style="display: none;">
+            <h1>Find Your Perfect Bike</h1>
+            <div class="question">Can the bike be occasion?</div>
+            <div class="options">
+                <label><input type="radio" name="occasion" value="yes" onchange="updateStatus(5)"> Yes</label>
+                <label><input type="radio" name="occasion" value="no" onchange="updateStatus(5)"> No</label>
+            </div>
+            <button class="button" onclick="displaySummary()">Finish</button>
+        </div>
+
+        <div class="container" id="summary" style="display: none;">
+            <h1>Your Bike Preferences</h1>
+            <div id="summary-content"></div>
+        </div>
     </div>
 
     <script>
+        const pageStatuses = [false, false, false, false, false];
+
         function goToNextScreen(screenNumber) {
+            navigateToScreen(screenNumber);
+        }
+
+        function navigateToScreen(screenNumber) {
             document.querySelectorAll('.container').forEach(container => {
                 container.style.display = 'none';
             });
             document.getElementById(`screen${screenNumber}`).style.display = 'block';
         }
 
+        function updateStatus(screenNumber) {
+            const inputs = document.querySelectorAll(`#screen${screenNumber} input`);
+            const filled = Array.from(inputs).some(input => input.checked || input.value.trim());
+            pageStatuses[screenNumber - 1] = filled;
+
+            const navItem = document.getElementById(`nav-screen${screenNumber}`);
+            if (filled) {
+                navItem.classList.add('filled');
+            } else {
+                navItem.classList.remove('filled');
+            }
+        }
+
         function displaySummary() {
-    const summaryContent = document.getElementById('summary-content');
-    const answers = {
-        reason: Array.from(document.querySelectorAll('#screen1 input:checked')).map(input => input.value),
-        style: document.querySelector('#screen2 input:checked')?.value,
-        brands: Array.from(document.querySelectorAll('#screen3 input:checked')).map(input => input.value),
-        otherBrand: document.getElementById('other-brand').value.trim(),
-        budget: document.querySelector('#screen4 input:checked')?.value,
-        occasion: document.querySelector('#screen5 input:checked')?.value
-    };
-
-    let summaryHTML = `<p><strong>Reason for bike:</strong> ${answers.reason.length > 0 ? answers.reason.join(', ') : 'Not specified'}</p>`;
-    summaryHTML += `<p><strong>Riding style:</strong> ${answers.style || 'Not specified'}</p>`;
-    summaryHTML += `<p><strong>Favorite brands:</strong> ${answers.brands.length > 0 ? answers.brands.join(', ') : 'Not specified'}</p>`;
-    if (answers.otherBrand) {
-        summaryHTML += `<p><strong>Other brand:</strong> ${answers.otherBrand}</p>`;
-    }
-    summaryHTML += `<p><strong>Budget:</strong> ${answers.budget || 'Not specified'}</p>`;
-    summaryHTML += `<p><strong>Occasion:</strong> ${answers.occasion || 'Not specified'}</p>`;
-
-    summaryContent.innerHTML = summaryHTML;
-
-    // Navigate to the summary screen
-    document.querySelectorAll('.container').forEach(container => {
-        container.style.display = 'none';
-    });
-    document.getElementById('summary').style.display = 'block';
-}
+            const summaryContent = document.getElementById('summary-content');
+            summaryContent.innerHTML = "<p>Summary coming soon!</p>";
+            navigateToScreen('summary');
+        }
     </script>
 </body>
 </html>
