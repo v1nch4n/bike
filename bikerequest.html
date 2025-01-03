@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find Your Perfect Bike</title>
     <style>
+        @keyframes galaxyAnimation {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 1000px; }
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -12,11 +17,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-color: #f0f0f0;
+            background: #121212 url('https://www.transparenttextures.com/patterns/dark-matter.png');
+            background-size: 1000px 1000px;
+            animation: galaxyAnimation 60s linear infinite;
+            color: #e0e0e0;
         }
 
         h1 {
-            color: #333;
+            color: #bb86fc;
             font-size: 1.8rem;
             margin-bottom: 20px;
         }
@@ -33,37 +41,44 @@
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background-color: #ccc;
+            background-color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 0.9rem;
+            color: #e0e0e0;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, text-decoration 0.3s;
         }
 
         .timeline .step.completed {
-            background-color: #4caf50;
-            color: white;
+            background-color: #03dac6;
+            color: #000;
+            text-decoration: line-through;
         }
 
         .timeline .step:hover {
-            background-color: #ddd;
+            background-color: #444;
         }
 
         .container {
             width: 90%;
             max-width: 600px;
-            background: #fff;
+            background: #1e1e1e;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
             margin-bottom: 20px;
             position: relative;
+            display: none;
+        }
+
+        .container.active {
+            display: block;
         }
 
         .question {
-            color: #333;
+            color: #bb86fc;
             font-size: 1.8rem;
             margin-bottom: 20px;
         }
@@ -80,14 +95,14 @@
             gap: 10px;
             cursor: pointer;
             padding: 10px;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
+            background: #2c2c2c;
+            border: 1px solid #444;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
 
         .options label:hover {
-            background-color: #f1f1f1;
+            background-color: #3c3c3c;
         }
 
         .options input {
@@ -99,8 +114,8 @@
             bottom: 20px;
             right: 20px;
             padding: 10px 20px;
-            background-color: #4caf50;
-            color: white;
+            background-color: #03dac6;
+            color: #000;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -109,7 +124,7 @@
         }
 
         .button:hover {
-            background-color: #45a049;
+            background-color: #02c4b4;
         }
 
         .summary-content {
@@ -123,23 +138,41 @@
         .request-number {
             font-size: 1.2rem;
             font-weight: bold;
-            color: #333;
+            color: #bb86fc;
             margin-top: 20px;
         }
 
         .final-message {
             text-align: center;
-            color: #333;
+            color: #e0e0e0;
         }
 
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        footer span {
+            color: #bb86fc;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
     <h1>Find Your Perfect Bike</h1>
 
-    <div class="timeline" id="timeline"></div>
+    <div class="timeline" id="timeline">
+        <div class="step" onclick="navigateToScreen(1)" id="step1">1</div>
+        <div class="step" onclick="navigateToScreen(2)" id="step2">2</div>
+        <div class="step" onclick="navigateToScreen(3)" id="step3">3</div>
+        <div class="step" onclick="navigateToScreen(4)" id="step4">4</div>
+    </div>
 
-    <div class="container" id="screen1">
+    <!-- Screen 1 -->
+    <div class="container active" id="screen1">
         <div class="question">Why do you need a bike?</div>
         <div class="options">
             <label><input type="checkbox" value="commuting"> Commuting</label>
@@ -151,156 +184,89 @@
         <button class="button" onclick="goToNextScreen(2)">Next</button>
     </div>
 
-    <div class="container" id="screen2" style="display: none;">
-        <div class="question">What is your riding style?</div>
+    <!-- Screen 2 -->
+    <div class="container" id="screen2">
+        <div class="question">What is your budget?</div>
         <div class="options">
-            <label><input type="radio" name="riding-style" value="urban"> Urban</label>
-            <label><input type="radio" name="riding-style" value="mountain"> Mountain</label>
-            <label><input type="radio" name="riding-style" value="road"> Road</label>
-            <label><input type="radio" name="riding-style" value="trail"> Trail</label>
-            <label><input type="radio" name="riding-style" value="electric"> Electric</label>
+            <label><input type="radio" name="budget" value="low"> Below $500</label>
+            <label><input type="radio" name="budget" value="mid"> $500 - $1000</label>
+            <label><input type="radio" name="budget" value="high"> Above $1000</label>
         </div>
+        <button class="button" onclick="goToPreviousScreen(1)">Back</button>
         <button class="button" onclick="goToNextScreen(3)">Next</button>
     </div>
 
-    <div class="container" id="screen3" style="display: none;">
-        <div class="question">Do you have some favorite brands?</div>
+    <!-- Screen 3 -->
+    <div class="container" id="screen3">
+        <div class="question">What type of terrain will you ride on?</div>
         <div class="options">
-            <label><input type="checkbox" value="brand1"> Trek</label>
-            <label><input type="checkbox" value="brand2"> Specialized</label>
-            <label><input type="checkbox" value="brand3"> Giant</label>
-            <label><input type="checkbox" value="brand4"> Cannondale</label>
-            <label><input type="checkbox" value="brand5"> Scott</label>
-            <label><input type="checkbox" value="brand6"> Bianchi</label>
-            <label><input type="checkbox" value="brand7"> Canyon</label>
-            <label><input type="checkbox" value="brand8"> Santa Cruz</label>
-            <label><input type="checkbox" value="brand9"> Orbea</label>
-            <label><input type="checkbox" value="brand10"> Cube</label>
-            <label><input type="checkbox" value="dontcare"> I don't care</label>
-            <label><input type="text" placeholder="Other (type your favorite brand)" id="other-brand"></label>
+            <label><input type="radio" name="terrain" value="road"> Road</label>
+            <label><input type="radio" name="terrain" value="mountain"> Mountain Trails</label>
+            <label><input type="radio" name="terrain" value="mixed"> Mixed (Road + Trails)</label>
         </div>
+        <button class="button" onclick="goToPreviousScreen(2)">Back</button>
         <button class="button" onclick="goToNextScreen(4)">Next</button>
     </div>
 
-    <div class="container" id="screen4" style="display: none;">
-        <div class="question">What is your budget?</div>
-        <div class="options">
-            <label><input type="radio" name="budget" value="cheap"> Go cheap, run expensive (200 to 500 CHF)</label>
-            <label><input type="radio" name="budget" value="decent"> Find me a decent bike (500 to 1,500 CHF)</label>
-            <label><input type="radio" name="budget" value="passion"> My bike is my passion (1,500 to unlimited CHF)</label>
+    <!-- Final Screen -->
+    <div class="container" id="screen4">
+        <div class="question final-message">Thank you for your answers!</div>
+        <div class="summary-content">
+            <p>We have all the details we need to find your perfect bike!</p>
+            <p class="request-number">Your request number: <span id="requestNumber"></span></p>
         </div>
-        <button class="button" onclick="goToNextScreen(5)">Next</button>
+        <button class="button" onclick="restartQuiz()">Start Over</button>
     </div>
 
-    <div class="container" id="screen5" style="display: none;">
-        <div class="question">Can the bike be occasion?</div>
-        <div class="options">
-            <label><input type="radio" name="occasion" value="yes"> Yes</label>
-            <label><input type="radio" name="occasion" value="no"> No</label>
-        </div>
-        <button class="button" onclick="goToNextScreen(6)">Next</button>
-    </div>
-
-    <div class="container" id="screen6" style="display: none;">
-        <div class="question">What is your email address?</div>
-        <div class="options">
-            <label><input type="email" id="email" placeholder="Enter your email" required></label>
-        </div>
-        <button class="button" onclick="validateEmail()">Next</button>
-    </div>
-
-    <div class="container" id="summary" style="display: none;">
-        <h2>Summary</h2>
-        <div class="summary-content" id="summary-content"></div>
-        <button class="button" onclick="goToNextScreen(1)">Edit Answers</button>
-        <button class="button" onclick="completeRequest()">Confirm</button>
-    </div>
-
-    <div class="container" id="completion" style="display: none;">
-        <div class="final-message">
-            <h2>Well Done!</h2>
-            <p>You've provided me with all the information I need for the moment. I will get back to you with three bike offers within 24h.</p>
-            <p class="request-number">Request Number: <span id="request-number"></span></p>
-        </div>
-    </div>
+    <footer>
+        Made with <span>❤</span> in Winterthur, est. 2024
+    </footer>
 
     <script>
-        const timeline = document.getElementById('timeline');
-        const questionScreens = ["screen1", "screen2", "screen3", "screen4", "screen5", "screen6"];
-        const allScreens = [...questionScreens, "summary", "completion"];
+        let currentScreen = 1;
+        const totalScreens = 4;
 
-        function setupTimeline() {
-            questionScreens.forEach((_, index) => {
-                const step = document.createElement('div');
-                step.classList.add('step');
-                step.textContent = index + 1;
-                step.onclick = () => goToNextScreen(index + 1);
-                timeline.appendChild(step);
-            });
-        }
-
-        function updateTimeline(currentStep) {
-            const steps = document.querySelectorAll('.timeline .step');
-            steps.forEach((step, index) => {
-                step.classList.toggle('completed', index < currentStep);
-            });
-        }
-
-        function goToNextScreen(screenNumber) {
-            allScreens.forEach((screen, index) => {
-                document.getElementById(screen).style.display = index + 1 === screenNumber ? 'block' : 'none';
-            });
-            if (screenNumber <= questionScreens.length) {
-                updateTimeline(screenNumber - 1);
-            } else if (screenNumber === questionScreens.length + 1) {
-                displaySummary();
+        function updateTimeline() {
+            for (let i = 1; i <= totalScreens; i++) {
+                const step = document.getElementById(`step${i}`);
+                if (i < currentScreen) {
+                    step.classList.add("completed");
+                } else {
+                    step.classList.remove("completed");
+                }
             }
         }
 
-        function validateEmail() {
-            const email = document.getElementById('email').value;
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (emailRegex.test(email)) {
-                goToNextScreen(7);
-            } else {
-                alert('Please enter a valid email address.');
-            }
+        function goToNextScreen(nextScreen) {
+            document.getElementById(`screen${currentScreen}`).classList.remove("active");
+            document.getElementById(`screen${nextScreen}`).classList.add("active");
+            currentScreen = nextScreen;
+            updateTimeline();
         }
 
-        function displaySummary() {
-            const summaryContent = document.getElementById('summary-content');
-            const answers = {
-                reason: Array.from(document.querySelectorAll('#screen1 input:checked')).map(input => input.value),
-                style: document.querySelector('#screen2 input:checked')?.value,
-                brands: Array.from(document.querySelectorAll('#screen3 input:checked')).map(input => input.value),
-                otherBrand: document.getElementById('other-brand').value.trim(),
-                budget: document.querySelector('#screen4 input:checked')?.value,
-                occasion: document.querySelector('#screen5 input:checked')?.value,
-                email: document.getElementById('email').value.trim()
-            };
-
-            let summaryHTML = `<p><strong>Reason for bike:</strong> ${answers.reason.length > 0 ? answers.reason.join(', ') : 'Not specified'}</p>`;
-            summaryHTML += `<p><strong>Riding style:</strong> ${answers.style || 'Not specified'}</p>`;
-            summaryHTML += `<p><strong>Favorite brands:</strong> ${answers.brands.length > 0 ? answers.brands.join(', ') : 'Not specified'}</p>`;
-            if (answers.otherBrand) {
-                summaryHTML += `<p><strong>Other brand:</strong> ${answers.otherBrand}</p>`;
-            }
-            summaryHTML += `<p><strong>Budget:</strong> ${answers.budget || 'Not specified'}</p>`;
-            summaryHTML += `<p><strong>Occasion:</strong> ${answers.occasion || 'Not specified'}</p>`;
-            summaryHTML += `<p><strong>Email:</strong> ${answers.email}</p>`;
-
-            summaryContent.innerHTML = summaryHTML;
+        function goToPreviousScreen(previousScreen) {
+            document.getElementById(`screen${currentScreen}`).classList.remove("active");
+            document.getElementById(`screen${previousScreen}`).classList.add("active");
+            currentScreen = previousScreen;
+            updateTimeline();
         }
 
-        function completeRequest() {
-            const requestNumber = Math.random().toString().slice(2, 18);
-            document.getElementById('request-number').textContent = requestNumber;
-            goToNextScreen(8);
+        function navigateToScreen(screenNumber) {
+            document.getElementById(`screen${currentScreen}`).classList.remove("active");
+            document.getElementById(`screen${screenNumber}`).classList.add("active");
+            currentScreen = screenNumber;
+            updateTimeline();
         }
 
-        setupTimeline();
-        goToNextScreen(1);
+        function restartQuiz() {
+            navigateToScreen(1);
+            currentScreen = 1;
+            updateTimeline();
+            document.getElementById("requestNumber").textContent = Math.floor(Math.random() * 1000000);
+        }
+
+        document.getElementById("requestNumber").textContent = Math.floor(Math.random() * 1000000);
+        updateTimeline();
     </script>
 </body>
 </html>
